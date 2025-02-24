@@ -11,12 +11,12 @@ include("includes/navbar.php")
   <div class="row justify-content-center">
     <!-- Formulario -->
     <section class="col-12 col-md-4 border rounded p-3 mb-3 mb-md-0">
-      <form action="">
+      <form action="anadir_artista.php" method="POST">
         <h4 class="text-center">Añadir artista</h4>
         <input type="text" name="nombre" class="form-control my-3" placeholder="Nombre" required />
         <input type="text" name="genero" class="form-control my-3" placeholder="Género" required />
         <input type="number" name="anio_debut" class="form-control my-3" min="1900" max="2999" placeholder="Año debut">
-        <button class="btn btn-success w-100">Añadir</button>
+        <input type="submit" name="anadir_artista" class="btn btn-success w-100" value="Añadir" />
       </form>
     </section>
     <!-- Tabla -->
