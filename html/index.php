@@ -1,50 +1,39 @@
 <?php
-  $servidor = "mysql";
-  $usuario = "root";
-  $contrasena = "rootpassword";
-  $base_de_datos = "musica";
-
-  // Crear la conexión
-  $conexion = new mysqli($servidor, $usuario, $contrasena, $base_de_datos);
-
-  // Verificar la conexión
-  if ($conexion->connect_error) {
-    die("Conexión fallida: " . $conexion->connect_error);
-  }
-
-  // SELECT de prueba
-  $sql_numero_artistas = "select count(id) as total_artistas from artistas";
-  $sql_numero_generos = "SELECT DISTINCT genero FROM artistas";
-  $result = $conexion->query($sql_numero_artistas);
-  $numero_artistas = 0;
-  if($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-      $numero_artistas = $row["total_artistas"];
-    }
-  } else {
-    echo "0 resultados";
-  }
-
-  $result = $conexion->query($sql_numero_generos);
-  $numero_generos = $result->num_rows;
+$head_title = "Inicio - App Musica";
+include("includes/head.php");
+include("includes/navbar.php");
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>T03 - Musica</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <h1>Bienvenido a la web de música</h1>
-  <h2>Esta página web sirve para gestionar una pequeña base de datos sobre distintos artistas</h2>
-  <h2>Datos almacenados:</h2>
-  <section class="dynamic-data">
-    <h3 class="c-black"><?=$numero_artistas?> artistas</h3>
-    <h3 class="c-black"><?=$numero_generos?> géneros</h3>
+<?php
+include("database.php"); // Conexión a la base de datos
+
+// SELECT de prueba
+$sql_numero_artistas = "select count(id) as total_artistas from artistas";
+$sql_numero_generos = "SELECT DISTINCT genero FROM artistas";
+$result = $conexion->query($sql_numero_artistas);
+$numero_artistas = 0;
+if ($result->num_rows > 0) {
+  while ($row = $result->fetch_assoc()) {
+    $numero_artistas = $row["total_artistas"];
+  }
+} else {
+  echo "0 resultados";
+}
+
+$result = $conexion->query($sql_numero_generos);
+$numero_generos = $result->num_rows;
+?>
+<main class="container my-5">
+  <h1 class="text-center mb-4">Bienvenido a la web de música</h1>
+  <h2 class="text-center mb-4 text-muted">Esta página web sirve para gestionar una pequeña base de datos sobre distintos artistas</h2>
+  <h3 class="text-center mb-3">Datos almacenados:</h3>
+  <section class="dynamic-data row justify-content-center">
+    <h3 class="c-black col-6 col-md-4 text-center mb-3"><?= $numero_artistas ?> artistas</h3>
+    <h3 class="c-black col-6 col-md-4 text-center mb-3"><?= $numero_generos ?> géneros</h3>
   </section>
-  <a href="app.php" class="btn">VER DATOS</a>
-</body>
-</html>
+  <div class="text-center">
+    <a href="app.php" class="btn btn-primary btn-lg">VER DATOS</a>
+  </div>
+</main>
+
+<?php include("includes/footer.php") ?>
