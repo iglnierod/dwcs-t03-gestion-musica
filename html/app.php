@@ -3,14 +3,14 @@
 <?php
 $head_title = "App Musica - Base de datos";
 include("includes/head.php");
-include("includes/navbar.php")
+include("includes/navbar.php");
 ?>
 
 <main class="container my-5">
   <h1 class="text-center mb-4">Gestionar base de datos</h1>
   <div class="row justify-content-center">
     <!-- Formulario -->
-    <section class="col-12 col-md-4 border rounded p-3 mb-3 mb-md-0">
+    <section class="col-12 col-md-4 border rounded p-3 mb-3 mb-md-0 align-self-start">
       <form action="anadir_artista.php" method="POST">
         <h4 class="text-center">Añadir artista</h4>
         <input type="text" name="nombre" class="form-control my-3" placeholder="Nombre" required />
@@ -40,16 +40,19 @@ include("includes/navbar.php")
             while ($row = mysqli_fetch_assoc($result)) {
           ?>
               <tr>
-                <td><?= $row["nombre"] ?></td>
-                <td><?= $row["genero"] ?></td>
+                <td><?= htmlspecialchars($row["nombre"]) ?></td>
+                <td><?= htmlspecialchars($row["genero"]) ?></td>
                 <td><?= $row["anio_debut"] ?></td>
-                <td>Editar</td>
+                <td>
+                  <a class="btn btn-danger" href="eliminar_artista.php?id=<?= $row['id'] ?>"
+                    onclick="return confirm('¿Seguro que quieres eliminar a <?= htmlspecialchars($row['nombre']) ?>?');">Eliminar</a>
+                </td>
               </tr>
             <?php }
           } else {
             ?>
             <tr>
-              <td colspan="4" class="text-center">No hay artsitas registrados</td>
+              <td colspan="4" class="text-center">No hay artistas registrados</td>
             </tr>
           <?php }
           mysqli_free_result($result);
